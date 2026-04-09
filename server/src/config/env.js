@@ -20,6 +20,8 @@ const envSchema = z.object({
 
   TELEGRAM_BOT_TOKEN: z.string().min(1),
   TELEGRAM_API_BASE: z.string().url().default("https://api.telegram.org"),
+  TELEGRAM_WEBHOOK_URL: z.string().url().optional(),
+  TELEGRAM_WEBHOOK_SECRET: z.string().min(8).optional(),
 });
 
 /**

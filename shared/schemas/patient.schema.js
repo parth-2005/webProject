@@ -23,7 +23,6 @@ export const patientSchema = z.object({
   visitHistory: z.array(visitHistoryItemSchema),
   telegramOptIn: z.boolean().default(true).optional(),
   telegramChatId: z.string().optional().nullable(),
-  whatsappOptIn: z.boolean().optional(),
   createdAt: z.coerce.date().optional(),
 });
 

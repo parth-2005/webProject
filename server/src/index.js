@@ -4,7 +4,7 @@ import { getRedis } from "./config/redis.js";
 import { createApp } from "./app.js";
 import { registerReminderJob } from "./jobs/reminderJob.js";
 import { registerFollowUpJob } from "./jobs/followUpJob.js";
-import { startTelegramBot } from "./services/telegram/telegram.client.js";
+import { ensureTelegramWebhook } from "./services/telegram/telegram.client.js";
 
 /**
  * Start the HTTP server after connecting dependencies.
@@ -19,7 +19,10 @@ export async function startServer() {
     const server = app.listen(env.PORT, () => {
       registerReminderJob();
       registerFollowUpJob();
-      startTelegramBot();
+      ensureTelegramWebhook().catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error("Telegram webhook setup failed:", err?.message ?? err);
+      });
 
       // eslint-disable-next-line no-console
       console.log(`Server listening on port ${env.PORT}`);
