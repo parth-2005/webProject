@@ -21,7 +21,9 @@ export const patientSchema = z.object({
   bloodGroup: z.string(),
   address: z.string(),
   visitHistory: z.array(visitHistoryItemSchema),
-  whatsappOptIn: z.boolean().default(true).optional(),
+  telegramOptIn: z.boolean().default(true).optional(),
+  telegramChatId: z.string().optional().nullable(),
+  whatsappOptIn: z.boolean().optional(),
   createdAt: z.coerce.date().optional(),
 });
 

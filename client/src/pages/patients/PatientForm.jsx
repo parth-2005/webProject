@@ -11,7 +11,8 @@ const schema = z.object({
 	gender: z.enum(["male", "female", "other"]),
 	bloodGroup: z.string().min(1),
 	address: z.string().min(1),
-	whatsappOptIn: z.boolean(),
+	telegramOptIn: z.boolean(),
+	telegramChatId: z.string().optional().nullable(),
 	visitHistory: z.array(z.any()).default([]),
 });
 
@@ -37,7 +38,8 @@ export default function PatientForm() {
 		gender: "male",
 		bloodGroup: "",
 		address: "",
-		whatsappOptIn: true,
+		telegramOptIn: true,
+		telegramChatId: "",
 		visitHistory: [],
 	};
 
@@ -51,7 +53,8 @@ export default function PatientForm() {
 			gender: formData.get("gender") || "male",
 			bloodGroup: formData.get("bloodGroup") || "",
 			address: formData.get("address") || "",
-			whatsappOptIn: formData.get("whatsappOptIn") === "on",
+			telegramOptIn: formData.get("telegramOptIn") === "on",
+			telegramChatId: String(formData.get("telegramChatId") || "").trim() || null,
 			visitHistory: defaults.visitHistory || [],
 		};
 
@@ -85,10 +88,11 @@ export default function PatientForm() {
 				</select>
 				<input name="bloodGroup" className="rounded-md border px-3 py-2" placeholder="Blood Group" defaultValue={defaults.bloodGroup} />
 				<input name="address" className="rounded-md border px-3 py-2" placeholder="Address" defaultValue={defaults.address} />
+				<input name="telegramChatId" className="rounded-md border px-3 py-2" placeholder="Telegram Chat ID" defaultValue={defaults.telegramChatId || ""} />
 			</div>
 			<label className="inline-flex items-center gap-2 text-sm">
-				<input name="whatsappOptIn" type="checkbox" defaultChecked={Boolean(defaults.whatsappOptIn)} />
-				WhatsApp updates enabled
+				<input name="telegramOptIn" type="checkbox" defaultChecked={Boolean(defaults.telegramOptIn)} />
+				Telegram updates enabled
 			</label>
 			{error && <p className="text-sm text-red-600">{error}</p>}
 			<button type="submit" className="rounded-md bg-sky-700 text-white px-4 py-2">Save</button>

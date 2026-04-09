@@ -56,7 +56,7 @@ export async function orchestrateMessage({ message, conversation }) {
 				doctorId: context.doctorId,
 				date: context.preferredDate,
 				slotTime: selectedSlot.start,
-				bookedVia: "whatsapp",
+				bookedVia: "telegram",
 				patientId: context.patientId || null,
 				status: "booked",
 			};

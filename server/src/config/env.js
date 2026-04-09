@@ -17,6 +17,9 @@ const envSchema = z.object({
 
   HOSPITAL_NAME: z.string().min(1),
   HOSPITAL_PHONE: z.string().min(1),
+
+  TELEGRAM_BOT_TOKEN: z.string().min(1),
+  TELEGRAM_API_BASE: z.string().url().default("https://api.telegram.org"),
 });
 
 /**

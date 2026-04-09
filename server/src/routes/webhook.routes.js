@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { receiveWhatsappWebhook, validateWhatsappWebhookBody } from "../controllers/webhook.controller.js";
+import { receiveTelegramWebhook, validateTelegramWebhookBody } from "../controllers/webhook.controller.js";
 
 const router = Router();
 
-router.post("/whatsapp", validateWhatsappWebhookBody, receiveWhatsappWebhook);
+router.post("/telegram", validateTelegramWebhookBody, receiveTelegramWebhook);
 
 export default router;
 

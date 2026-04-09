@@ -35,6 +35,10 @@ export async function listPatients({ page = 1, limit = 10, search = "" }) {
  * @returns {Promise<any>}
  */
 export async function createPatientRecord(patientData) {
+  if (typeof patientData.telegramOptIn === "undefined" && typeof patientData.whatsappOptIn === "boolean") {
+    patientData.telegramOptIn = patientData.whatsappOptIn;
+  }
+
   const existing = await Patient.findOne({ phone: patientData.phone });
   if (existing) {
     throw new ApiError(409, "Patient with this phone number already exists");
@@ -64,6 +68,10 @@ export async function getPatientRecordById(id) {
  * @returns {Promise<any>}
  */
 export async function updatePatientRecord(id, patientData) {
+  if (typeof patientData.telegramOptIn === "undefined" && typeof patientData.whatsappOptIn === "boolean") {
+    patientData.telegramOptIn = patientData.whatsappOptIn;
+  }
+
   const { _id, ...payload } = patientData;
   const patient = await Patient.findByIdAndUpdate(id, { $set: payload }, { new: true, runValidators: true });
   if (!patient) {

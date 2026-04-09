@@ -2,7 +2,7 @@ import { APPOINTMENT_STATUS } from "shared/constants/appointmentStatus.js";
 
 import { Appointment } from "../../models/Appointment.model.js";
 import { Patient } from "../../models/Patient.model.js";
-import { send } from "../whatsapp/messageSender.js";
+import { sendTelegramMessage } from "../telegram/messageSender.js";
 
 /**
  * Send follow-up messages for appointments completed 23-25 hours ago.
@@ -20,11 +20,11 @@ export async function sendPostVisitFollowUps() {
 	});
 
 	for (const appointment of appointments) {
-		const patient = await Patient.findById(appointment.patientId).select("phone name");
-		if (!patient?.phone) continue;
+		const patient = await Patient.findById(appointment.patientId).select("telegramChatId telegramOptIn");
+		if (!patient?.telegramChatId || patient.telegramOptIn === false) continue;
 
-		await send(
-			patient.phone,
+		await sendTelegramMessage(
+			patient.telegramChatId,
 			"We hope you are feeling better. Reply to this message if you would like a follow-up appointment.",
 		);
 

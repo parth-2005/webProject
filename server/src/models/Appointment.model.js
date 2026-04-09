@@ -32,7 +32,7 @@ const AppointmentSchema = new Schema({
   },
   bookedVia: {
     type: String,
-    enum: ["dashboard", "whatsapp"],
+    enum: ["dashboard", "telegram"],
     default: "dashboard",
   },
   reminderSent: {

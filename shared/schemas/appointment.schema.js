@@ -14,7 +14,7 @@ export const appointmentSchema = z.object({
   date: z.coerce.date(),
   slotTime: z.string(),
   status: z.enum(APPOINTMENT_STATUS_VALUES),
-  bookedVia: z.enum(["dashboard", "whatsapp"]),
+  bookedVia: z.enum(["dashboard", "telegram"]),
   reminderSent: z.boolean().default(false).optional(),
   followUpSent: z.boolean().default(false).optional(),
   notes: z.string(),

@@ -2,7 +2,7 @@ import { APPOINTMENT_STATUS } from "shared/constants/appointmentStatus.js";
 
 import { Appointment } from "../../models/Appointment.model.js";
 import { Patient } from "../../models/Patient.model.js";
-import { send } from "../whatsapp/messageSender.js";
+import { sendTelegramMessage } from "../telegram/messageSender.js";
 
 /**
  * Send reminders for appointments 23-25 hours in the future.
@@ -20,11 +20,11 @@ export async function sendUpcomingReminders() {
 	}).populate("doctorId", "name");
 
 	for (const appointment of appointments) {
-		const patient = await Patient.findById(appointment.patientId).select("phone name");
-		if (!patient?.phone) continue;
+		const patient = await Patient.findById(appointment.patientId).select("telegramChatId telegramOptIn");
+		if (!patient?.telegramChatId || patient.telegramOptIn === false) continue;
 
-		await send(
-			patient.phone,
+		await sendTelegramMessage(
+			patient.telegramChatId,
 			`Reminder: You have an appointment on ${appointment.date.toDateString()} at ${appointment.slotTime}.`,
 		);
 

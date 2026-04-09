@@ -19,7 +19,8 @@ const patientSchema = new mongoose.Schema(
     bloodGroup: { type: String, required: true },
     address: { type: String, required: true },
     visitHistory: { type: [visitHistorySchema], default: [] },
-    whatsappOptIn: { type: Boolean, default: true },
+    telegramOptIn: { type: Boolean, default: true },
+    telegramChatId: { type: String, default: null, index: true },
   },
   { timestamps: true },
 );
